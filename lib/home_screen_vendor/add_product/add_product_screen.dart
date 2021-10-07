@@ -22,7 +22,6 @@ class _AddProductState extends State<AddProduct> {
   final TextEditingController _controllerName = TextEditingController();
   final TextEditingController _controllerBrand = TextEditingController();
   final TextEditingController _controllerPrice = TextEditingController();
-  final TextEditingController _controllerGender = TextEditingController();
 
   XFile? image;
   bool imageIsSelected = false;
@@ -148,7 +147,7 @@ class _AddProductState extends State<AddProduct> {
                     Icons.keyboard_arrow_down_rounded,
                     color: Colors.black,
                   ),
-                  items: <String>['male', 'female'].map((String value) {
+                  items: <String>['Glasses', 'Goggles', 'Lens'].map((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(

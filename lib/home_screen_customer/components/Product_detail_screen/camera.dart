@@ -18,7 +18,7 @@ class _CustomCameraState extends State<CustomCamera> {
   @override
   void initState() {
     super.initState();
-    controller = CameraController(cameras[0] as CameraDescription, ResolutionPreset.max);
+    controller = CameraController(cameras[1] as CameraDescription, ResolutionPreset.max);
     controller.initialize().then((_) {
       if (!mounted) {
         return;
