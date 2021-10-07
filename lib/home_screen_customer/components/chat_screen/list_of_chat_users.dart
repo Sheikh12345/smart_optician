@@ -80,7 +80,7 @@ class _ListOfChatUsersState extends State<ListOfChatUsers> {
                             MaterialPageRoute(
                               builder: (context) => ChatScreenWithUser(
                                 receiverId: snapshot.data!.docs[index]
-                                    ['receiverId'] as int,
+                                    ['receiverId'],
                                 receiverName: snapshot.data!.docs[index]['name']
                                     as String,
                               ),
@@ -102,7 +102,7 @@ class _ListOfChatUsersState extends State<ListOfChatUsers> {
                               margin: const EdgeInsets.only(bottom: 4),
                               padding: EdgeInsets.symmetric(
                                   vertical: size.height * 0.01,
-                                  horizontal: size.width * 0.03),
+                                  horizontal: size.width * 0.02),
                               decoration: const BoxDecoration(
                                 color: Colors.white,
                                 boxShadow: [
@@ -125,7 +125,7 @@ class _ListOfChatUsersState extends State<ListOfChatUsers> {
                                       Container(
                                         alignment: Alignment.center,
                                         margin: EdgeInsets.only(
-                                            right: size.width * 0.02),
+                                            right: size.width * 0.01),
                                         width: size.width * 0.14,
                                         height: size.width * 0.14,
                                         decoration: const BoxDecoration(
@@ -164,7 +164,7 @@ class _ListOfChatUsersState extends State<ListOfChatUsers> {
                                             ),
                                           ),
                                           const SizedBox(
-                                            height: 3,
+                                            height: 2,
                                           ),
                                           if (type == 'text')
                                             Expanded(
@@ -182,7 +182,7 @@ class _ListOfChatUsersState extends State<ListOfChatUsers> {
                                             ),
                                           if (type == 'image')
                                             SizedBox(
-                                              width: size.width * 0.63,
+                                              width: size.width * 0.62,
                                               child: Text(
                                                 'Image',
                                                 style: TextStyle(
@@ -195,7 +195,7 @@ class _ListOfChatUsersState extends State<ListOfChatUsers> {
                                             ),
                                           if (type == 'voice')
                                             SizedBox(
-                                              width: size.width * 0.63,
+                                              width: size.width * 0.62,
                                               child: Text(
                                                 'Voice message',
                                                 style: TextStyle(

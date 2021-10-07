@@ -13,15 +13,22 @@ import 'package:smart_optician/registration/login_screen.dart';
 class AuthOperations {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  signUp(BuildContext context, String email, String password,
-      String fullName) async {
+  signUp({required BuildContext context,required  String email,required String password,
+    required  String firstName,required  String lastName,required  String address,required String phoneNum}) async {
     try {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
 
       if (userCredential.user != null) {
         User? user = _auth.currentUser;
-        FireStoreAuthData().storeSignUpData(fullName);
+        Map<String,dynamic> map = {
+          'firstName':firstName,
+    'lastName':lastName,
+          'address':address,
+          'phoneNum':phoneNum,
+          'image':'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png'
+        };
+        FireStoreAuthData().storeSignUpData(map);
         if (user != null && !user.emailVerified) {
           showSnackBarFailed(context, 'Please verify your email first.');
 

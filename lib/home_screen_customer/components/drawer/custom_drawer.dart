@@ -6,6 +6,8 @@ import 'package:smart_optician/home_screen_customer/components/cart_screen/cart_
 import 'package:smart_optician/home_screen_customer/components/chat_screen/chat_screen.dart';
 import 'package:smart_optician/home_screen_customer/components/chat_screen/list_of_chat_users.dart';
 import 'package:smart_optician/home_screen_customer/components/my_orders/my_orders.dart';
+import 'package:smart_optician/home_screen_customer/components/profile/profile_screen.dart';
+import 'package:smart_optician/home_screen_customer/components/wish_list/wish_list.dart';
 import 'package:smart_optician/registration/login_screen.dart';
 import 'package:smart_optician/styles/colors.dart';
 
@@ -22,76 +24,81 @@ class _CustomDrawerState extends State<CustomDrawer> {
     Size size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
-        color:AppConstants().primaryColorCustomer,
-        borderRadius: const BorderRadius.only(topLeft: Radius.circular(30),
-        bottomLeft: Radius.circular(30)
-        ),
+        color: AppConstants().primaryColorCustomer,
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30), bottomLeft: Radius.circular(30)),
       ),
-      width: size.width*0.6,
+      width: size.width * 0.6,
       height: size.height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          drawerTile(
-            size: size,
-            text: 'All Glasses',
-            voidCallback: (){
+          drawerTile(size: size, text: 'Wishlist ', voidCallback: () {
+            goBackPreviousScreen(context);
+            screenPush(context, WishList());
 
-            }
-          ),
+          }),
           drawerTile(
               size: size,
               text: 'My orders',
-              voidCallback: (){
+              voidCallback: () {
                 goBackPreviousScreen(context);
                 screenPush(context, MyOrders());
-              }
-          ),
+              }),
           drawerTile(
               size: size,
               text: 'Cart',
-              voidCallback: (){
-             goBackPreviousScreen(context);
-             screenPush(context, CartScreen());
-              }
-          ),
+              voidCallback: () {
+                goBackPreviousScreen(context);
+                screenPush(context, CartScreen());
+              }),
           drawerTile(
               size: size,
               text: 'Messages',
-              voidCallback: (){
+              voidCallback: () {
                 goBackPreviousScreen(context);
-                screenPush(context, ListOfChatUsers(
-                  color: AppConstants().primaryColorCustomer,
-                ));
-              }
-          ),
+                screenPush(
+                    context,
+                    ListOfChatUsers(
+                      color: AppConstants().primaryColorCustomer,
+                    ));
+              }),
+          drawerTile(
+              size: size,
+              text: 'Profile',
+              voidCallback: () {
+                goBackPreviousScreen(context);
+                screenPush(
+                    context,
+                    ProfileScreen());
+              }),
           drawerTile(
               size: size,
               text: 'LogOut',
-              voidCallback: (){
-             FirebaseAuth.instance.signOut().whenComplete((){
-               Navigator.pop(context);
-               screenPushRep(context, const LoginScreen());
-             });
-              }
-          ),
-
-
-
+              voidCallback: () {
+                FirebaseAuth.instance.signOut().whenComplete(() {
+                  Navigator.pop(context);
+                  screenPushRep(context, const LoginScreen());
+                });
+              }),
         ],
       ),
     );
   }
 
-  drawerTile({required String text, required VoidCallback voidCallback,required Size size}){
-    return   InkWell(
-    onTap: voidCallback,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-          child: Text('$text',style: GoogleFonts.cabin(
-          color: Colors.white,
-          fontSize: size.width*0.06
-      ),),
-    ));
+  drawerTile(
+      {required String text,
+      required VoidCallback voidCallback,
+      required Size size}) {
+    return InkWell(
+        onTap: voidCallback,
+        child: Container(
+          margin: EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            '$text',
+            style: GoogleFonts.cabin(
+                color: Colors.white, fontSize: size.width * 0.06),
+          ),
+        ));
   }
 }

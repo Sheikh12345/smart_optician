@@ -33,7 +33,7 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   int quantity = 0;
-
+  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -57,10 +57,10 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             IconButton(
                 onPressed: () {
                   screenPush(
-                      context,
-                      CustomCamera(
-                        ImageAddres: widget.image,
-                      ),
+                    context,
+                    CustomCamera(
+                      ImageAddres: widget.image,
+                    ),
                   );
                 },
                 icon: const Icon(Icons.camera_alt)),
@@ -93,13 +93,33 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       horizontal: size.width * 0.03, vertical: 10),
                   child: Column(
                     children: [
-                      Text(
-                        'Product details:',
-                        style: GoogleFonts.cabin(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600,
-                          fontSize: size.width * 0.07,
-                        ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            'Product details:',
+                            style: GoogleFonts.cabin(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                              fontSize: size.width * 0.07,
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(
+                              isLiked ? Icons.favorite : Icons.favorite_border,
+                              color: Colors.red,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                isLiked != isLiked;
+                              });
+                              addToWishList(context);
+                            },
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: size.height * 0.05,
@@ -277,5 +297,27 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         ),
       ),
     );
+  }
+
+  addToWishList(BuildContext context) async {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('wishList')
+        .doc()
+        .set({
+      'image': widget.image,
+      'brand': widget.brand,
+      'price': widget.price,
+      'gender': widget.gender,
+      'quantity': quantity,
+      'productId': widget.productId,
+      'ownerId': widget.ownerId
+    }).whenComplete(() {
+      showSnackBarSuccess(context, 'Product added to wishlist');
+      setState(() {
+        isLiked != isLiked;
+      });
+    });
   }
 }

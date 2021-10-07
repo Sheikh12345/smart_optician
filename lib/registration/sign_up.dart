@@ -17,7 +17,11 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-  final TextEditingController _controllerfullName = TextEditingController();
+  final TextEditingController _controllerFirstName = TextEditingController();
+  final TextEditingController _controllerLastName = TextEditingController();
+  final TextEditingController _controllerAddress = TextEditingController();
+  final TextEditingController _controllerPhoneNum = TextEditingController();
+
   int? roleValue;
   @override
   Widget build(BuildContext context) {
@@ -58,9 +62,20 @@ class _SignUpState extends State<SignUp> {
                 width: size.width * 0.8,
                 child: TextField(
                   autofocus: false,
-                  controller: _controllerfullName,
+                  controller: _controllerFirstName,
                   decoration: const InputDecoration(
-                    hintText: "Enter your full name",
+                    hintText: "Enter your first name",
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: size.height * 0.02),
+                width: size.width * 0.8,
+                child: TextField(
+                  autofocus: false,
+                  controller: _controllerLastName,
+                  decoration: const InputDecoration(
+                    hintText: "Enter your last name",
                   ),
                 ),
               ),
@@ -72,6 +87,28 @@ class _SignUpState extends State<SignUp> {
                   controller: _controllerEmail,
                   decoration: const InputDecoration(
                     hintText: "Enter your email",
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: size.height * 0.02),
+                width: size.width * 0.8,
+                child: TextField(
+                  autofocus: false,
+                  controller: _controllerAddress,
+                  decoration: const InputDecoration(
+                    hintText: "Enter your address",
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(top: size.height * 0.02),
+                width: size.width * 0.8,
+                child: TextField(
+                  autofocus: false,
+                  controller: _controllerPhoneNum,
+                  decoration: const InputDecoration(
+                    hintText: "Enter your phone number",
                   ),
                 ),
               ),
@@ -145,7 +182,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   signUp(BuildContext context) {
-    if (_controllerfullName.text.replaceAll(' ', '').length < 3) {
+    if (_controllerFirstName.text.replaceAll(' ', '').length < 3) {
       showSnackBarFailed(context, 'Name is short');
     } else if (!EmailValidator.validate(
         _controllerEmail.text.replaceAll(' ', ''))) {
@@ -155,9 +192,14 @@ class _SignUpState extends State<SignUp> {
 
       Fluttertoast.showToast(msg: '', backgroundColor: Colors.red);
     } else {
-      AuthOperations().signUp(context, _controllerEmail.text,
-          _controllerPassword.text, _controllerfullName.text);
+      AuthOperations().signUp(
+          context: context,
+          email: _controllerEmail.text,
+          address: _controllerAddress.text,
+          firstName: _controllerFirstName.text,
+          lastName: _controllerLastName.text,
+          password: _controllerPassword.text,
+          phoneNum: _controllerPhoneNum.text);
     }
   }
-
 }

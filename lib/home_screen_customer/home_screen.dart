@@ -17,7 +17,7 @@ class HomeScreenCustomer extends StatefulWidget {
 
 class _HomeScreenCustomerState extends State<HomeScreenCustomer> {
   final globalKey = GlobalKey<ScaffoldState>();
-  String? gender = 'male';
+  String? gender = 'Glasses';
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -32,7 +32,8 @@ class _HomeScreenCustomerState extends State<HomeScreenCustomer> {
             Container(
               width: size.width,
               height: 50,
-              decoration: BoxDecoration(color: AppConstants().primaryColorCustomer),
+              decoration:
+                  BoxDecoration(color: AppConstants().primaryColorCustomer),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -43,7 +44,7 @@ class _HomeScreenCustomerState extends State<HomeScreenCustomer> {
                     dropdownColor: AppConstants().primaryColorCustomer,
                     value: gender,
                     hint: Text(
-                      'Select gender',
+                      'Glasses type',
                       style: GoogleFonts.cabin(
                         color: Colors.white,
                       ),
@@ -52,7 +53,8 @@ class _HomeScreenCustomerState extends State<HomeScreenCustomer> {
                       Icons.keyboard_arrow_down_rounded,
                       color: Colors.white,
                     ),
-                    items: <String>['male', 'female'].map((String value) {
+                    items: <String>['Glasses', 'Goggles', 'Lens']
+                        .map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
@@ -83,133 +85,137 @@ class _HomeScreenCustomerState extends State<HomeScreenCustomer> {
             ),
             Container(
               width: size.width,
-              height: size.height*0.91,
+              height: size.height * 0.91,
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
-                .collection(gender ?? 'data')
-                .snapshots(),
+                    .collection(gender ?? 'data')
+                    .snapshots(),
                 builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          screenPush(
-                              context,
-                              ProductDetailScreen(
-                                brand: snapshot.data.docs[index]['brand'],
-                                gender: snapshot.data.docs[index]['gender'],
-                                image: snapshot.data.docs[index]['image'],
-                                price: snapshot.data.docs[index]['price'],
-                                ownerId: snapshot.data.docs[index]['ownerId'] ,
-                                productId: snapshot.data.docs[index]['productId'] ,
-                              ));
-                        },
-                        child: Container(
-                          width: size.width,
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
-                          height: size.height * 0.22,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Colors.grey.shade300,
-                                  offset: const Offset(1, 1),
-                                  blurRadius: 2,
-                                  spreadRadius: 2),
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                child: Image.network(
-                                    snapshot.data.docs[index]['image']),
-                                width: size.width * 0.8,
-                                height: size.height * 0.16,
-                                padding: EdgeInsets.all(20),
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              screenPush(
+                                  context,
+                                  ProductDetailScreen(
+                                    brand: snapshot.data.docs[index]['brand'],
+                                    gender: snapshot.data.docs[index]['gender'],
+                                    image: snapshot.data.docs[index]['image'],
+                                    price: snapshot.data.docs[index]['price'],
+                                    ownerId: snapshot.data.docs[index]
+                                        ['ownerId'],
+                                    productId: snapshot.data.docs[index]
+                                        ['productId'],
+                                  ));
+                            },
+                            child: Container(
+                              width: size.width,
+                              margin: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 5),
+                              height: size.height * 0.22,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: Colors.grey.shade300,
+                                      offset: const Offset(1, 1),
+                                      blurRadius: 2,
+                                      spreadRadius: 2),
+                                ],
                               ),
-                              Container(
-                                width: size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    Row(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Image.network(
+                                        snapshot.data.docs[index]['image']),
+                                    width: size.width * 0.8,
+                                    height: size.height * 0.16,
+                                    padding: EdgeInsets.all(20),
+                                  ),
+                                  Container(
+                                    width: size.width,
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: Row(
                                       children: [
-                                        Text(
-                                          "Brand:",
-                                          style: TextStyle(
-                                              fontSize: size.width * 0.04,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Text(
-                                          " ${snapshot.data.docs[index]['brand']}",
-                                          style: TextStyle(
-                                            fontSize: size.width * 0.04,
-                                          ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Brand:",
+                                              style: TextStyle(
+                                                  fontSize: size.width * 0.04,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Text(
+                                              " ${snapshot.data.docs[index]['brand']}",
+                                              style: TextStyle(
+                                                fontSize: size.width * 0.04,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ],
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                     ),
-                                  ],
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                ),
+                                  ),
+                                  Container(
+                                    width: size.width,
+                                    margin:
+                                        EdgeInsets.symmetric(horizontal: 10),
+                                    child: Row(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Price:",
+                                              style: TextStyle(
+                                                  fontSize: size.width * 0.04,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Text(
+                                              " ${snapshot.data.docs[index]['price']}",
+                                              style: TextStyle(
+                                                fontSize: size.width * 0.04,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "Gender:",
+                                              style: TextStyle(
+                                                  fontSize: size.width * 0.04,
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            Text(
+                                              " ${snapshot.data.docs[index]['gender']}",
+                                              style: TextStyle(
+                                                fontSize: size.width * 0.04,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                    ),
+                                  )
+                                ],
                               ),
-                              Container(
-                                width: size.width,
-                                margin: EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Price:",
-                                          style: TextStyle(
-                                              fontSize: size.width * 0.04,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Text(
-                                          " ${snapshot.data.docs[index]['price']}",
-                                          style: TextStyle(
-                                            fontSize: size.width * 0.04,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "Gender:",
-                                          style: TextStyle(
-                                              fontSize: size.width * 0.04,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Text(
-                                          " ${snapshot.data.docs[index]['gender']}",
-                                          style: TextStyle(
-                                            fontSize: size.width * 0.04,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      );
-                    });
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
+                            ),
+                          );
+                        });
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
                 },
               ),
             )
