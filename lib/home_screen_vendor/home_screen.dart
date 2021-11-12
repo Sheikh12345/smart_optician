@@ -23,7 +23,7 @@ class _HomeScreenVendorState extends State<HomeScreenVendor> {
 
 
   final globalKey = GlobalKey<ScaffoldState>();
-  String? gender  = 'male' ;
+  String? gender  = 'Glasses' ;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -49,7 +49,7 @@ class _HomeScreenVendorState extends State<HomeScreenVendor> {
                         dropdownColor: AppConstants().primaryColorVendor,
                         value: gender,
                         hint: Text(
-                          'Select gender',
+                          'Select type',
                           style: GoogleFonts.cabin(
                             color: Colors.white,
                           ),
@@ -58,7 +58,7 @@ class _HomeScreenVendorState extends State<HomeScreenVendor> {
                           Icons.keyboard_arrow_down_rounded,
                           color: Colors.white,
                         ),
-                        items: <String>['male', 'female'].map((String value) {
+                        items: <String>['Glasses', 'Goggles', 'Lens'].map((String value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(
