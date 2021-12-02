@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   IconButton(
                       onPressed: () {
-                        // _globalKey.currentState!.openDrawer();
+                        _globalKey.currentState!.openDrawer();
                       },
                       icon: const Icon(Icons.menu)),
                   IconButton(

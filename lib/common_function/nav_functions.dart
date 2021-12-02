@@ -8,3 +8,8 @@ screenPush(BuildContext context, Widget widget){
 screenPushRep(BuildContext context, Widget widget){
   Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> widget));
 }
+
+
+goBackPreviousScreen(BuildContext context){
+  Navigator.pop(context);
+}

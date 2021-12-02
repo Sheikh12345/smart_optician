@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_optician/common_function/nav_functions.dart';
 import 'package:smart_optician/common_function/snackbar.dart';
 import 'package:smart_optician/ui/cart_screen/cart_screen.dart';
+import 'package:smart_optician/ui/chat_screen/chat_screen.dart';
 import 'package:smart_optician/ui/home_screen/component/web_view_screen.dart';
 
 class ProductViewScreen extends StatefulWidget {
@@ -62,11 +63,25 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
                       fontSize: size.width * 0.06,
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {
-                        screenPush(context, WebViewScreen());
-                      },
-                      icon: Icon(Icons.threed_rotation))
+                  Row(
+                    children: [
+                      IconButton(
+                          onPressed: () {
+                            screenPush(
+                                context,
+                                ChatScreenWithUser(
+                                  receiverName: 'Owner',
+                                  receiverId: widget.ownerId,
+                                ));
+                          },
+                          icon: const Icon(Icons.message)),
+                      IconButton(
+                          onPressed: () {
+                            screenPush(context, WebViewScreen());
+                          },
+                          icon: Icon(Icons.threed_rotation)),
+                    ],
+                  )
                 ],
               ),
               Container(
