@@ -34,6 +34,9 @@ class ProductViewScreen extends StatefulWidget {
 }
 
 class _ProductViewScreenState extends State<ProductViewScreen> {
+  int quantity = 0;
+  bool isLiked = false;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -128,13 +131,30 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      'Rs.${widget.price}',
-                      style: GoogleFonts.cabin(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w900,
-                        fontSize: size.width * 0.045,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Rs.${widget.price}',
+                          style: GoogleFonts.cabin(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w900,
+                            fontSize: size.width * 0.045,
+                          ),
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            isLiked ? Icons.favorite : Icons.favorite_border,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isLiked = !isLiked;
+                            });
+                            addToWishList(context);
+                          },
+                        )
+                      ],
                     ),
                     const SizedBox(
                       height: 10,
@@ -195,5 +215,27 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
         ),
       ),
     );
+  }
+
+  addToWishList(BuildContext context) async {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .collection('wishList')
+        .doc()
+        .set({
+      'image': widget.imageUrl,
+      'brand': widget.brandName,
+      'price': widget.price,
+      'gender': widget.gender,
+      'quantity': 1,
+      'productId': widget.productId,
+      'ownerId': widget.ownerId
+    }).whenComplete(() {
+      showSnackBarSuccess(context, 'Product added to wishlist');
+      setState(() {
+        isLiked != isLiked;
+      });
+    });
   }
 }
