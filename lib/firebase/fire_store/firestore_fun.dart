@@ -7,7 +7,6 @@ class FireStoreDatabase {
     FirebaseFirestore.instance
         .collection(usersCollection)
         .doc(userId)
-        .set({'userState': userState});
+        .update({'userState': userState});
   }
-
 }

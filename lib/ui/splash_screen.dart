@@ -6,6 +6,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_optician/common_function/nav_functions.dart';
+import 'package:smart_optician/firebase/fire_store/fetch_shop_data.dart';
 
 import '../main.dart';
 import 'authentication_screen/login_screen.dart';
@@ -20,8 +21,11 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreeState extends State<SplashScreen> {
   late bool state;
+
   @override
   void initState() {
+    searchData = [];
+    FetchShopData().fetchData();
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
@@ -129,6 +133,7 @@ class _SplashScreeState extends State<SplashScreen> {
     try {
       Future.delayed(const Duration(seconds: 4), () {
         if (FirebaseAuth.instance.currentUser?.uid == null) {
+          FetchShopData().fetchData();
           screenPushRep(context, LoginScreen());
         } else {
           screenPushRep(context, HomeScreen());

@@ -17,18 +17,18 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  String? city;
-  String? fullName;
+  String? firstName;
+  String? lastName;
   String? email;
   String? address;
-  String? phonNumber;
+  String? phoneNumber;
   bool isUploaded = false;
   late firebase_storage.Reference refChild;
   String? imageAddress =
       'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
   final TextEditingController _controllerEmail = TextEditingController();
-  final TextEditingController _controllerCityName = TextEditingController();
-  final TextEditingController _controllerFullName = TextEditingController();
+  final TextEditingController _controllerFirstName = TextEditingController();
+  final TextEditingController _controllerLastName = TextEditingController();
   final TextEditingController _controllerAddress = TextEditingController();
   final TextEditingController _controllerPhoneNum = TextEditingController();
   final imagePicker = ImagePicker();
@@ -54,19 +54,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get()
         .then((value) {
-      fullName = value.get('fullName');
-      phonNumber = value.get('phoneNum');
+      firstName = value.get('firstName');
+      lastName = value.get('lastName');
       address = value.get('address');
-      city = value.get('city');
-      imageAddress = value.get(
-          'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png');
+      phoneNumber = value.get('phoneNum');
+      imageAddress = value.get('image');
     }).whenComplete(() {
-      _controllerFullName.text = fullName.toString();
+      _controllerFirstName.text = firstName.toString();
+      _controllerLastName.text = lastName.toString();
       _controllerAddress.text = address.toString();
-      _controllerCityName.text = city.toString();
       _controllerEmail.text =
           FirebaseAuth.instance.currentUser!.email!.toString();
-      _controllerPhoneNum.text = phonNumber.toString();
+      _controllerPhoneNum.text = phoneNumber.toString();
     });
   }
 
@@ -75,20 +74,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: Text(
-          'Profile',
-          style: GoogleFonts.rubik(color: Colors.white),
-        ),
         leading: IconButton(
-          onPressed: () {
-            goBackPreviousScreen(context);
-          },
+          onPressed: () {},
           icon: Icon(
             Icons.arrow_back,
             color: Colors.white,
           ),
         ),
+        title: Text(
+          'Profile',
+          style: GoogleFonts.rubik(color: Colors.white),
+        ),
+        backgroundColor: Colors.black,
       ),
       body: Container(
         margin: EdgeInsets.only(top: size.height * 0.02),
@@ -104,8 +101,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     Container(
                       width: size.width * 0.3,
                       height: size.width * 0.3,
-                      decoration: const BoxDecoration(
-                          color: Colors.green,
+                      decoration: BoxDecoration(
+                          color: Colors.grey.shade700,
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               image: NetworkImage(
@@ -116,16 +113,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: size.width * 0.3,
                       height: size.width * 0.3,
                       decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Colors.grey.shade700,
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               image: FileImage(File(imagePath1)),
                               fit: BoxFit.fill)),
                     ),
                   IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.camera_alt,
-                      color: Colors.black,
+                      color: Colors.grey.shade700,
                     ),
                     onPressed: () {
                       getImage(context, size);
@@ -137,14 +134,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: TextField(
-                  controller: _controllerEmail,
-                  readOnly: true,
-                  decoration: const InputDecoration(
-                      border: InputBorder.none, hintText: 'Email'),
+                  controller: _controllerFirstName,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
                 ),
                 decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.grey,
+                      color: Colors.grey.shade700,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(10)),
@@ -153,30 +150,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: TextField(
-                  controller: _controllerFullName,
+                  controller: _controllerLastName,
                   decoration: InputDecoration(
                     border: InputBorder.none,
                   ),
                 ),
                 decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.grey,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(10)),
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                child: TextField(
-                  controller: _controllerCityName,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.green,
+                      color: Colors.grey.shade700,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(10)),
@@ -192,7 +173,40 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 ),
                 decoration: BoxDecoration(
                     border: Border.all(
-                      color: Colors.green,
+                      color: Colors.grey.shade700,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10)),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: TextField(
+                  controller: _controllerAddress,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey.shade700,
+                      width: 1,
+                    ),
+                    borderRadius: BorderRadius.circular(10)),
+              ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: TextField(
+                  readOnly: true,
+                  controller: _controllerEmail,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.grey.shade700,
                       width: 1,
                     ),
                     borderRadius: BorderRadius.circular(10)),
@@ -215,7 +229,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     : null,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.green,
+                    color: Colors.black,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   alignment: Alignment.center,
@@ -225,7 +239,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   child: isUploaded == false
                       ? const Text(
                           'Update',
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.w500),
                         )
                       : const CircularProgressIndicator(
                           color: Colors.white,
@@ -241,9 +256,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   uploadImage(BuildContext context) async {
     refChild = firebase_storage.FirebaseStorage.instance.ref().child("Users");
-    refChild.putFile(File(image1.path)).whenComplete(() {
+    refChild.putFile(File(image1.path)).whenComplete(() async {
+      imageAddress = await refChild.getDownloadURL();
       updateData(context);
-      imageAddress = refChild.getDownloadURL() as String?;
     });
   }
 
@@ -252,8 +267,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .update({
-      'city': _controllerCityName.text,
-      'fullName': _controllerFullName.text,
+      'firstName': _controllerFirstName.text,
+      'lastName': _controllerLastName.text,
       'address': _controllerAddress.text,
       'phoneNum': _controllerPhoneNum.text,
       'image': imageAddress

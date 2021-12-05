@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_optician/common_function/nav_functions.dart';
 import 'package:smart_optician/common_function/snackbar.dart';
 
@@ -19,8 +20,12 @@ class _WishListState extends State<WishList> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.black,
           centerTitle: true,
-          title: const Text("Wish list"),
+          title: Text(
+            "Wish list",
+            style: GoogleFonts.rubik(color: Colors.white),
+          ),
         ),
         body: Column(
           children: [

@@ -35,7 +35,7 @@ class AuthOperations {
         };
         FireStoreAuthData().storeSignUpData(map);
         if (user != null && !user.emailVerified) {
-          showSnackBarFailed(context, 'Please verify your email first.');
+          showSnackBarSuccess(context, 'Please verify your email first.');
           await user.sendEmailVerification();
           screenPushRep(context, const LoginScreen());
           return;
@@ -58,7 +58,7 @@ class AuthOperations {
     }
   }
 
-  signIn(String email, String password, BuildContext context) async {
+  Future<bool> signIn(String email, String password, BuildContext context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
@@ -68,8 +68,8 @@ class AuthOperations {
 
         if (user != null && !user.emailVerified) {
           showSnackBarFailed(context, 'Please verify your email');
-
           await user.sendEmailVerification();
+          return true;
         } else {
           FirebaseFirestore.instance
               .collection('users')
@@ -77,23 +77,29 @@ class AuthOperations {
               .get()
               .then((value) {
             screenPushRep(context, const HomeScreen());
+            return true;
           });
+          return true;
         }
       } else {
         showSnackBarFailed(context, 'Something is wrong');
+        return true;
       }
     } on FirebaseAuthException catch (e) {
+
       if (e.code == 'user-not-found') {
         showSnackBarFailed(context, 'No user found for that email');
       } else if (e.code == 'wrong-password') {
         showSnackBarFailed(context, 'Password is wrong');
       }
+      return true;
     }
   }
 
   forgotPassword(BuildContext context, String email) {
     FirebaseAuth.instance.sendPasswordResetEmail(email: email).then((value) {
       showSnackBarSuccess(context, 'Please check your email ($email)');
+      Navigator.pop(context);
     });
   }
 }

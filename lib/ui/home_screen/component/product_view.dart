@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smart_optician/common_function/nav_functions.dart';
 import 'package:smart_optician/common_function/snackbar.dart';
 import 'package:smart_optician/ui/cart_screen/cart_screen.dart';
 import 'package:smart_optician/ui/chat_screen/chat_screen.dart';
 import 'package:smart_optician/ui/home_screen/component/web_view_screen.dart';
+
+import 'in_app_browser.dart';
 
 class ProductViewScreen extends StatefulWidget {
   final String imageUrl;
@@ -79,10 +82,22 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
                           },
                           icon: const Icon(Icons.message)),
                       IconButton(
-                          onPressed: () {
-                            screenPush(context, WebViewScreen());
+                          onPressed: () async {
+                            InAppBrowser.openWithSystemBrowser(
+                              url: Uri.parse(
+                                  "https://jeeliz.com/demos/jeelizWidgetGitPublicDemo/"),
+                            );
+                            // await MyInAppBrowser.openUrlRequest(
+                            //     urlRequest:
+                            //     URLRequest(url: Uri.parse("https://flutter.dev")),
+                            //     options: InAppBrowserClassOptions(
+                            //         inAppWebViewGroupOptions: InAppWebViewGroupOptions(
+                            //             crossPlatform: InAppWebViewOptions(
+                            //               useShouldOverrideUrlLoading: true,
+                            //               useOnLoadResource: true,
+                            //             ))));
                           },
-                          icon: Icon(Icons.threed_rotation)),
+                          icon: const Icon(Icons.threed_rotation)),
                     ],
                   )
                 ],
@@ -230,7 +245,9 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
       'gender': widget.gender,
       'quantity': 1,
       'productId': widget.productId,
-      'ownerId': widget.ownerId
+      'ownerId': widget.ownerId,
+      'code': widget.productId,
+      'name': widget.name,
     }).whenComplete(() {
       showSnackBarSuccess(context, 'Product added to wishlist');
       setState(() {

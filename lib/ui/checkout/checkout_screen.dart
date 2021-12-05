@@ -30,7 +30,8 @@ class CheckOutScreen extends StatefulWidget {
 class _CheckOutScreenState extends State<CheckOutScreen> {
   TextEditingController _controllerAddress = TextEditingController();
   TextEditingController _controllerPhoneNum = TextEditingController();
-
+  String address = '';
+  String phoneNumber = '';
   bool isCashOnDelivery = true;
 
   int price = 0;
@@ -39,6 +40,16 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
   void initState() {
     super.initState();
     StripeService.init();
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get()
+        .then((value) {
+      _controllerAddress.text = value.get('address');
+      _controllerPhoneNum.text = value.get('phoneNum');
+    }).whenComplete(() {
+      setState(() {});
+    });
     for (int i = 0; i < widget.productListPrice.length; i++) {
       price = int.parse(widget.productListPrice[i]) + price;
     }

@@ -1,6 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:smart_optician/common_function/nav_functions.dart';
+import 'package:smart_optician/ui/my_orders/dialog_box.dart';
 
 class MyOrders extends StatefulWidget {
   const MyOrders({Key? key}) : super(key: key);
@@ -23,7 +26,11 @@ class _MyOrdersState extends State<MyOrders> {
         child: Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("My order"),
+        backgroundColor: Colors.black,
+        title: Text(
+          "My order",
+          style: GoogleFonts.rubik(color: Colors.white),
+        ),
       ),
       body: Container(
         width: size.width,
@@ -44,7 +51,7 @@ class _MyOrdersState extends State<MyOrders> {
                         width: size.width,
                         margin: const EdgeInsets.symmetric(
                             horizontal: 10, vertical: 5),
-                        height: size.height * 0.25,
+                        height: size.height * 0.34,
                         decoration: BoxDecoration(
                           color: Colors.white,
                           boxShadow: [
@@ -59,7 +66,7 @@ class _MyOrdersState extends State<MyOrders> {
                           alignment: Alignment.topRight,
                           children: [
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(" Order # ${index + 1}"),
                                 SizedBox(
@@ -134,26 +141,27 @@ class _MyOrdersState extends State<MyOrders> {
                                       ],
                                     )),
                                 Container(
-                                    width: size.width,
-                                    margin: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 5),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          "Product count:",
-                                          style: TextStyle(
-                                              fontSize: size.width * 0.04,
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        Text(
-                                          " ${snapshot.data.docs[index]['productId'].length}",
-                                          style: TextStyle(
+                                  width: size.width,
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "Product count:",
+                                        style: TextStyle(
                                             fontSize: size.width * 0.04,
-                                          ),
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      Text(
+                                        " ${snapshot.data.docs[index]['productId'].length}",
+                                        style: TextStyle(
+                                          fontSize: size.width * 0.04,
                                         ),
-                                      ],
-                                    )),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Container(
                                     width: size.width,
                                     margin: const EdgeInsets.symmetric(
@@ -175,6 +183,16 @@ class _MyOrdersState extends State<MyOrders> {
                                         ),
                                       ],
                                     )),
+                                Container(
+                                  child: snapshot.data.docs[index]['status'] ==
+                                          'completed'
+                                      ? IconButton(
+                                          onPressed: () {
+                                            showDialogBox(context, '');
+                                          },
+                                          icon: const Icon(Icons.star))
+                                      : Container(),
+                                )
                               ],
                             ),
                             IconButton(
@@ -198,5 +216,19 @@ class _MyOrdersState extends State<MyOrders> {
         ),
       ),
     ));
+  }
+
+  showDialogBox(BuildContext context, String? placeId) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          content: CustomDialogBox(
+            placeId: placeId,
+          ),
+          backgroundColor: Colors.white,
+        );
+      },
+    );
   }
 }

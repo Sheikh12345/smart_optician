@@ -80,7 +80,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${snapshot.data['fullName']}",
+                                "${snapshot.data['firstName']}",
                                 style: GoogleFonts.rubik(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,
