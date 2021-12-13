@@ -8,10 +8,11 @@ class SearchModel {
   final String name;
   final String ownerId;
   final String price;
-
+  final String id;
   SearchModel(
       {required this.brand,
       required this.type,
+      required this.id,
       required this.code,
       required this.desc,
       required this.gender,

@@ -118,6 +118,8 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                           screenPush(
                               context,
                               ProductViewScreen(
+                                docId: _filters[index].id,
+                                category: _filters[index].type,
                                 imageUrl: _filters[index].image,
                                 price: _filters[index].price,
                                 name: _filters[index].name,

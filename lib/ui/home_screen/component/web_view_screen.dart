@@ -1,5 +1,8 @@
+// import 'dart:io';
+//
 // import 'package:flutter/material.dart';
 // import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+// import 'package:webview_flutter/webview_flutter.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 //
 // class WebViewScreen extends StatefulWidget {
@@ -10,8 +13,18 @@
 // }
 //
 // class _WebViewScreenState extends State<WebViewScreen> {
+//
+//   @override
+//   void initState() {
+//     if (Platform.isAndroid) WebView.platform = AndroidWebView();
+//     super.initState();
+//   }
+//
 //   @override
 //   Widget build(BuildContext context) {
+//     return   WebView(
+//       initialUrl: 'https://flutter.dev',
+//     );
 //     return Scaffold(
 //       body: Container(
 //         child: Column(
@@ -19,19 +32,23 @@
 //             Expanded(
 //               child: Container(
 //                 child: InAppWebView(
-//                   initialData:
-//                   "https://jeeliz.com/demos/jeelizWidgetGitPublicDemo/",
+//                   initialData: InAppWebViewInitialData(
+//                     data: '',
+//                     baseUrl: Uri.parse(
+//                         "https://jeeliz.com/demos/jeelizWidgetGitPublicDemo/"),
+//                   ),
 //                   initialOptions: InAppWebViewGroupOptions(
 //                       crossPlatform: InAppWebViewOptions(
-//                         mediaPlaybackRequiresUserGesture: false,
-//                         debuggingEnabled: true,
-//                       )),
-//                   onWebViewCreated: (InAppWebViewController controller) {
-//                     _inAppWebViewController = controller;
-//                   },
+//                         javaScriptEnabled: true,
+//                     supportZoom: true,
+//                     clearCache: true,
+//                     javaScriptCanOpenWindowsAutomatically: true,
+//                     mediaPlaybackRequiresUserGesture: false,
+//                   )),
+//                   onWebViewCreated: (InAppWebViewController controller) {},
 //                   androidOnPermissionRequest:
 //                       (InAppWebViewController controller, String origin,
-//                       List<String> resources) async {
+//                           List<String> resources) async {
 //                     return PermissionRequestResponse(
 //                         resources: resources,
 //                         action: PermissionRequestResponseAction.GRANT);

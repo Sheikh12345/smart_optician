@@ -21,13 +21,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _controllerPassword = TextEditingController();
   late bool passwordIsVisible;
   bool isLoading = false;
-  signIn(BuildContext context)async {
+  signIn(BuildContext context) async {
     if (EmailValidator.validate(_controllerEmail.text.replaceAll(' ', '')) &&
         _controllerPassword.text.length > 4) {
       setState(() {
         isLoading = true;
       });
-    await AuthOperations().signIn(_controllerEmail.text.replaceAll(' ', ''),
+      await AuthOperations().signIn(_controllerEmail.text.replaceAll(' ', ''),
           _controllerPassword.text.replaceAll(' ', ''), context);
       setState(() {
         isLoading = false;
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return SafeArea(
         child: Scaffold(
       backgroundColor: Colors.white.withOpacity(0.95),
-      body: Container(
+      body: SizedBox(
         width: size.width,
         child: SingleChildScrollView(
           child: Column(

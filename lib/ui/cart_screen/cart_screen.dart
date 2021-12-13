@@ -131,10 +131,11 @@ class _CartScreenState extends State<CartScreen> {
                                           width: size.width * 0.25,
                                           height: size.height * 0.14,
                                           decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                            image: NetworkImage(snapshot
-                                                .data.docs[index]['image']),
-                                          )),
+                                            image: DecorationImage(
+                                              image: NetworkImage(snapshot
+                                                  .data.docs[index]['image']),
+                                            ),
+                                          ),
                                         ),
                                         const SizedBox(
                                           width: 5,
@@ -200,33 +201,32 @@ class _CartScreenState extends State<CartScreen> {
                                               Text(
                                                   "${snapshot.data.docs[index]['quantity']}"),
                                               IconButton(
-                                                  onPressed: () {
-                                                    if (snapshot.data
-                                                                .docs[index]
-                                                            ['quantity'] >
-                                                        0) {
-                                                      FirebaseFirestore.instance
-                                                          .collection('users')
-                                                          .doc(FirebaseAuth
-                                                              .instance
-                                                              .currentUser!
-                                                              .uid)
-                                                          .collection('cart')
-                                                          .doc(snapshot.data
-                                                              .docs[index].id)
-                                                          .update({
-                                                        'quantity': snapshot
-                                                                    .data
-                                                                    .docs[index]
-                                                                ['quantity'] +
-                                                            1
-                                                      });
-                                                    }
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.add,
-                                                    size: size.width * 0.04,
-                                                  )),
+                                                onPressed: () {
+                                                  if (snapshot.data.docs[index]
+                                                          ['quantity'] >
+                                                      0) {
+                                                    FirebaseFirestore.instance
+                                                        .collection('users')
+                                                        .doc(FirebaseAuth
+                                                            .instance
+                                                            .currentUser!
+                                                            .uid)
+                                                        .collection('cart')
+                                                        .doc(snapshot.data
+                                                            .docs[index].id)
+                                                        .update({
+                                                      'quantity': snapshot.data
+                                                                  .docs[index]
+                                                              ['quantity'] +
+                                                          1
+                                                    });
+                                                  }
+                                                },
+                                                icon: Icon(
+                                                  Icons.add,
+                                                  size: size.width * 0.04,
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         )

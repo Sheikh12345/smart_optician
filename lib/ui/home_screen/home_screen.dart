@@ -18,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _controllerSearch = TextEditingController();
   final GlobalKey<ScaffoldState> _globalKey = GlobalKey();
+
   int selected = 0;
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Expanded(
                       child: TextField(
                         readOnly: true,
-                        onTap: (){
+                        onTap: () {
                           screenPush(context, const SearchResultScreen());
                         },
                         controller: _controllerSearch,
@@ -251,6 +252,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   screenPush(
                                       context,
                                       ProductViewScreen(
+                                        docId: snapshot.data.docs[index].id,
+                                        category: snapshot.data.docs[index]
+                                            ['category'],
                                         imageUrl: snapshot.data.docs[index]
                                             ['image'],
                                         price: snapshot.data.docs[index]

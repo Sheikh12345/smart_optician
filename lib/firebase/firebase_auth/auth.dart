@@ -58,7 +58,8 @@ class AuthOperations {
     }
   }
 
-  Future<bool> signIn(String email, String password, BuildContext context) async {
+  Future<bool> signIn(
+      String email, String password, BuildContext context) async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
@@ -86,7 +87,6 @@ class AuthOperations {
         return true;
       }
     } on FirebaseAuthException catch (e) {
-
       if (e.code == 'user-not-found') {
         showSnackBarFailed(context, 'No user found for that email');
       } else if (e.code == 'wrong-password') {

@@ -195,17 +195,7 @@ class _MyOrdersState extends State<MyOrders> {
                                 )
                               ],
                             ),
-                            IconButton(
-                                onPressed: () {
-                                  FirebaseFirestore.instance
-                                      .collection('users')
-                                      .doc(FirebaseAuth
-                                          .instance.currentUser!.uid)
-                                      .collection('orders')
-                                      .doc(snapshot.data.docs[index].id)
-                                      .delete();
-                                },
-                                icon: const Icon(Icons.delete))
+
                           ],
                         ));
                   });

@@ -33,6 +33,7 @@ class FetchShopData {
     for (int index = 0; index < _fireDocsLens.length; index++) {
       await _fireLens.doc(_fireDocsLens.elementAt(index)).get().then((value) {
         searchData.add(SearchModel(
+            id: _fireDocsGlasses.elementAt(index),
             brand: value.get('brand'),
             type: value.get('category'),
             code: value.get('code'),
@@ -64,6 +65,7 @@ class FetchShopData {
           .get()
           .then((value) {
         searchData.add(SearchModel(
+            id: _fireDocsGlasses.elementAt(index),
             brand: value.get('brand'),
             type: value.get('category'),
             code: value.get('code'),
@@ -93,6 +95,7 @@ class FetchShopData {
           .get()
           .then((value) {
         searchData.add(SearchModel(
+            id: _fireDocsGoggles.elementAt(index),
             brand: value.get('brand'),
             type: value.get('category'),
             code: value.get('code'),

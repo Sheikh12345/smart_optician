@@ -55,9 +55,10 @@ dependencies:
   flutter_credit_card: ^3.0.1
   google_ml_vision: ^0.0.7
   stripe_payment: ^1.1.4
-  webview_flutter: ^2.3.1
+  webview_flutter: ^3.0.0
   flutter_inappwebview:
   flutter_rating_bar: ^4.0.0
+  flutter_webview_plugin: ^0.4.0
 
 
 dev_dependencies:

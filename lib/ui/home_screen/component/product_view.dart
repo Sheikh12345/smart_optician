@@ -7,6 +7,7 @@ import 'package:smart_optician/common_function/nav_functions.dart';
 import 'package:smart_optician/common_function/snackbar.dart';
 import 'package:smart_optician/ui/cart_screen/cart_screen.dart';
 import 'package:smart_optician/ui/chat_screen/chat_screen.dart';
+import 'package:smart_optician/ui/home_screen/component/product_review_screen.dart';
 import 'package:smart_optician/ui/home_screen/component/web_view_screen.dart';
 
 import 'in_app_browser.dart';
@@ -14,12 +15,14 @@ import 'in_app_browser.dart';
 class ProductViewScreen extends StatefulWidget {
   final String imageUrl;
   final String name;
+  final String docId;
   final String price;
   final String desc;
   final String productId;
   final String ownerId;
   final String brandName;
   final String gender;
+  final String category;
   const ProductViewScreen(
       {Key? key,
       required this.imageUrl,
@@ -29,7 +32,9 @@ class ProductViewScreen extends StatefulWidget {
       required this.productId,
       required this.ownerId,
       required this.brandName,
-      required this.gender})
+      required this.gender,
+      required this.category,
+      required this.docId})
       : super(key: key);
 
   @override
@@ -82,22 +87,14 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
                           },
                           icon: const Icon(Icons.message)),
                       IconButton(
-                          onPressed: () async {
-                            InAppBrowser.openWithSystemBrowser(
-                              url: Uri.parse(
-                                  "https://jeeliz.com/demos/jeelizWidgetGitPublicDemo/"),
-                            );
-                            // await MyInAppBrowser.openUrlRequest(
-                            //     urlRequest:
-                            //     URLRequest(url: Uri.parse("https://flutter.dev")),
-                            //     options: InAppBrowserClassOptions(
-                            //         inAppWebViewGroupOptions: InAppWebViewGroupOptions(
-                            //             crossPlatform: InAppWebViewOptions(
-                            //               useShouldOverrideUrlLoading: true,
-                            //               useOnLoadResource: true,
-                            //             ))));
-                          },
-                          icon: const Icon(Icons.threed_rotation)),
+                        onPressed: () async {
+                          InAppBrowser.openWithSystemBrowser(
+                            url: Uri.parse(
+                                "https://jeeliz.com/demos/jeelizWidgetGitPublicDemo/"),
+                          );
+                        },
+                        icon: const Icon(Icons.threed_rotation),
+                      ),
                     ],
                   )
                 ],
@@ -171,8 +168,35 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
                         )
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
+                    InkWell(
+                      onTap: () {
+                        screenPush(
+                            context,
+                            ProductReviewScreen(
+                                productDocId: widget.docId,
+                                productCategory: widget.category));
+                      },
+                      child: Container(
+                          height: 20,
+                          child: Row(
+                            children: [
+                              Text(
+                                "Reviews",
+                                style: GoogleFonts.rubik(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: size.width * 0.045,
+                                    decoration: TextDecoration.underline),
+                              ),
+                              Icon(
+                                Icons.star,
+                                color: Colors.green,
+                              )
+                            ],
+                          )),
+                    ),
+                    SizedBox(
+                      height: 4,
                     ),
                     Container(
                       width: size.width,
