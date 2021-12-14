@@ -52,15 +52,17 @@ class _ProductReviewScreenState extends State<ProductReviewScreen> {
                         color: Colors.white,
                         boxShadow: [
                           BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 2,
-                              spreadRadius: 2,
-                              offset: Offset(2, 2)),
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 2,
+                            spreadRadius: 2,
+                            offset: Offset(2, 2),
+                          ),
                           BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              blurRadius: 2,
-                              spreadRadius: 2,
-                              offset: Offset(-2, -2))
+                            color: Colors.black.withOpacity(0.3),
+                            blurRadius: 2,
+                            spreadRadius: 2,
+                            offset: Offset(-2, -2),
+                          )
                         ],
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(

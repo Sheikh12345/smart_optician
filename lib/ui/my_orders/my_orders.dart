@@ -183,19 +183,8 @@ class _MyOrdersState extends State<MyOrders> {
                                         ),
                                       ],
                                     )),
-                                Container(
-                                  child: snapshot.data.docs[index]['status'] ==
-                                          'completed'
-                                      ? IconButton(
-                                          onPressed: () {
-                                            showDialogBox(context, '');
-                                          },
-                                          icon: const Icon(Icons.star))
-                                      : Container(),
-                                )
                               ],
                             ),
-
                           ],
                         ));
                   });
@@ -206,19 +195,5 @@ class _MyOrdersState extends State<MyOrders> {
         ),
       ),
     ));
-  }
-
-  showDialogBox(BuildContext context, String? placeId) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          content: CustomDialogBox(
-            placeId: placeId,
-          ),
-          backgroundColor: Colors.white,
-        );
-      },
-    );
   }
 }
