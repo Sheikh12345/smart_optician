@@ -58,7 +58,6 @@ dependencies:
   webview_flutter: ^3.0.0
   flutter_inappwebview:
   flutter_rating_bar: ^4.0.0
-  flutter_webview_plugin: ^0.4.0
 
 
 dev_dependencies:
