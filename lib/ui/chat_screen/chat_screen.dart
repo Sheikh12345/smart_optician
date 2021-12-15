@@ -48,6 +48,10 @@ class _ChatScreenWithUserState extends State<ChatScreenWithUser>
   XFile? image;
   bool imageIsSelected = false;
   bool fileIsUploading = false;
+  String? uid;
+  String? emaill;
+  @override
+
   @override
   void initState() {
     _audioRecorder = FlutterSoundRecorder();

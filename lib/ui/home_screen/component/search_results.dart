@@ -20,11 +20,12 @@ List<SearchModel> _filters = [];
 
 class _SearchResultScreenState extends State<SearchResultScreen> {
   final TextEditingController _controllerSearch = TextEditingController();
-
+  final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey();
   @override
   void initState() {
     super.initState();
     setState(() {
+      _filters = [];
       _filters = searchData;
     });
   }
@@ -34,6 +35,234 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        key: _scaffoldState,
+        drawer: Container(
+          width: size.width,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(20), topLeft: Radius.circular(20))),
+          child: Column(
+            children: [
+              Container(
+                  alignment: Alignment.center,
+                  width: size.width * 0.6,
+                  height: size.width * 0.6,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: []),
+                  child: Image.asset('assets/images/logo.png')),
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                "Filter",
+                style: GoogleFonts.rubik(
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                    fontSize: size.width * 0.055),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        "Min ",
+                        style: GoogleFonts.rubik(
+                            fontSize: size.width * 0.044,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 5),
+                        width: size.width * 0.2,
+                        height: size.height * 0.05,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(15)),
+                        child: TextField(
+                          controller: _minPrice,
+                          decoration: const InputDecoration(
+                              border: InputBorder.none, hintText: 'Price'),
+                        ),
+                      )
+                    ],
+                  ),
+                  Text("To"),
+                  Row(
+                    children: [
+                      Text(
+                        "Max ",
+                        style: GoogleFonts.rubik(
+                            fontSize: size.width * 0.044,
+                            fontWeight: FontWeight.w500),
+                      ),
+                      Container(
+                        padding: EdgeInsets.only(left: 5),
+                        width: size.width * 0.2,
+                        height: size.height * 0.05,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1,
+                            ),
+                            borderRadius: BorderRadius.circular(15)),
+                        child: TextField(
+                          controller: _maxPrice,
+                          decoration: const InputDecoration(
+                              border: InputBorder.none, hintText: 'Price'),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    "Gender:",
+                    style: GoogleFonts.rubik(
+                        color: Colors.black, fontWeight: FontWeight.w500),
+                  ),
+                  Row(
+                    children: [
+                      const Text("Female:"),
+                      Radio(
+                          value: 'male',
+                          groupValue: gender,
+                          onChanged: (value) {
+                            setState(() {
+                              gender = value as String?;
+                            });
+                          }),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      const Text("Male:"),
+                      Radio(
+                          value: 'female',
+                          groupValue: gender,
+                          onChanged: (value) {
+                            setState(() {
+                              gender = value as String?;
+                            });
+                          }),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: size.height * 0.02,
+              ),
+              SizedBox(
+                width: size.width * 0.8,
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: brand,
+                  hint: const Text("Select brand"),
+                  items:
+                      <String>['rayban', 'Prada', 'Oakla'].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (value) {
+                    print("brand ${value}");
+                    setState(() {
+                      brand = value;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(
+                height: size.height * 0.04,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        _filters = searchData
+                            .where((u) => (u.brand.toLowerCase().contains(
+                                    brand == null
+                                        ? ''
+                                        : brand.toString().toLowerCase()) ||
+                                u.gender
+                                    .toString()
+                                    .toLowerCase()
+                                    .contains(gender ?? '') ||
+                                (int.parse(u.price.toString()) >
+                                        int.parse(_minPrice.text.isEmpty == true
+                                            ? '0'
+                                            : _minPrice.text) &&
+                                    int.parse(u.price.toString()) <=
+                                        int.parse(_maxPrice.text.isEmpty == true
+                                            ? '1000'
+                                            : _maxPrice.text))))
+                            .toList();
+                        Navigator.pop(context);
+                      });
+                    },
+                    child: Container(
+                      width: size.width * 0.3,
+                      height: size.height * 0.05,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Apply',
+                        style: GoogleFonts.rubik(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(4)),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        gender = null;
+                        filteredIsRemoved = null;
+                        brand = null;
+                      });
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      width: size.width * 0.3,
+                      height: size.height * 0.05,
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Cancel',
+                        style: GoogleFonts.rubik(
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(4)),
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
         appBar: AppBar(
           backgroundColor: Colors.black,
           centerTitle: true,
@@ -74,7 +303,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                             color: Colors.black,
                           ),
                           onPressed: () {
-                            showCustomSheet(context);
+                            _scaffoldState.currentState!.openDrawer();
                           },
                         ),
                       ),
@@ -179,227 +408,6 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                         ),
                       );
                     }))
-          ],
-        ),
-      ),
-    );
-  }
-
-  showCustomSheet(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(20), topLeft: Radius.circular(20))),
-      builder: (context) => Container(
-        width: size.width,
-        height: size.height * 0.44,
-        decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(20), topLeft: Radius.circular(20))),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              "Filter",
-              style: GoogleFonts.rubik(
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600,
-                  fontSize: size.width * 0.055),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "Min ",
-                      style: GoogleFonts.rubik(
-                          fontSize: size.width * 0.044,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 5),
-                      width: size.width * 0.2,
-                      height: size.height * 0.05,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: TextField(
-                        controller: _minPrice,
-                        decoration: const InputDecoration(
-                            border: InputBorder.none, hintText: 'Price'),
-                      ),
-                    )
-                  ],
-                ),
-                Text("To"),
-                Row(
-                  children: [
-                    Text(
-                      "Max ",
-                      style: GoogleFonts.rubik(
-                          fontSize: size.width * 0.044,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 5),
-                      width: size.width * 0.2,
-                      height: size.height * 0.05,
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 1,
-                          ),
-                          borderRadius: BorderRadius.circular(15)),
-                      child: TextField(
-                        controller: _maxPrice,
-                        decoration: const InputDecoration(
-                            border: InputBorder.none, hintText: 'Price'),
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  "Gender:",
-                  style: GoogleFonts.rubik(
-                      color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-                Row(
-                  children: [
-                    const Text("Female:"),
-                    Radio(
-                        value: 'male',
-                        groupValue: gender,
-                        onChanged: (value) {
-                          setState(() {
-                            gender = value as String?;
-                          });
-                        }),
-                  ],
-                ),
-                Row(
-                  children: [
-                    const Text("Male:"),
-                    Radio(
-                        value: 'female',
-                        groupValue: gender,
-                        onChanged: (value) {
-                          setState(() {
-                            gender = value as String?;
-                          });
-                        }),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: size.height * 0.02,
-            ),
-            SizedBox(
-              width: size.width * 0.8,
-              child: DropdownButton<String>(
-                isExpanded: true,
-                value: brand,
-                hint: const Text("Select brand"),
-                items: <String>['rayban', 'Prada', 'Oakla'].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    brand = value;
-                  });
-                },
-              ),
-            ),
-            SizedBox(
-              height: size.height * 0.04,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      _filters = searchData
-                          .where((u) => (u.brand
-                                  .toLowerCase()
-                                  .contains(brand?.toLowerCase() ?? '') ||
-                              u.gender
-                                  .toString()
-                                  .contains(gender?.toLowerCase() ?? '') ||
-                              (int.parse(u.price.toString()) >
-                                      int.parse(_minPrice.text) &&
-                                  int.parse(u.price.toString()) <=
-                                      int.parse(_maxPrice.text))))
-                          .toList();
-                      Navigator.pop(context);
-                    });
-                  },
-                  child: Container(
-                    width: size.width * 0.3,
-                    height: size.height * 0.05,
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Apply',
-                      style: GoogleFonts.rubik(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(4)),
-                  ),
-                ),
-                InkWell(
-                  onTap: () {
-                    setState(() {
-                      gender = null;
-                      filteredIsRemoved = null;
-                      brand = null;
-                    });
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    width: size.width * 0.3,
-                    height: size.height * 0.05,
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Cancel',
-                      style: GoogleFonts.rubik(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(4)),
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),

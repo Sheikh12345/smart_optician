@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +24,6 @@ class MessageBubble extends StatefulWidget {
 }
 
 class _MessageBubbleState extends State<MessageBubble> {
-  late AudioPlayer audioPlayer;
 
   Duration position = Duration(
     seconds: 0,
@@ -37,50 +35,12 @@ class _MessageBubbleState extends State<MessageBubble> {
     minutes: 1,
   );
 
-  @override
-  void initState() {
-    super.initState();
-    audioPlayer = AudioPlayer();
-
-    audioPlayer.onDurationChanged.listen((updatedDuration) {
-      setState(() {
-        totalDuration = updatedDuration;
-      });
-    });
-
-    audioPlayer.onAudioPositionChanged.listen((updatedPosition) {
-      setState(() {
-        position = updatedPosition;
-      });
-    });
-
-    audioPlayer.onPlayerStateChanged.listen((event) {
-      if (event == PlayerState.STOPPED) {
-        setState(() {
-          icon = Icons.play_arrow;
-        });
-      }
-      if (event == PlayerState.PLAYING) {
-        icon = Icons.pause_outlined;
-      }
-      if (event == PlayerState.PAUSED) {
-        audioPlayer.resume();
-      }
-      if (event == PlayerState.COMPLETED) {
-        setState(() {
-          icon = Icons.play_arrow;
-        });
-        audioPlayer.stop();
-      }
-    });
-  }
 
   late IconData icon = Icons.play_arrow;
 
   @override
   void dispose() {
     super.dispose();
-    audioPlayer.dispose();
   }
 
   @override
@@ -239,7 +199,6 @@ class _MessageBubbleState extends State<MessageBubble> {
                   children: [
                     InkWell(
                       onTap: () {
-                        playAudio(widget.link);
                       },
                       child: Container(
                         width: size.width * 0.12,
@@ -469,7 +428,6 @@ class _MessageBubbleState extends State<MessageBubble> {
                   children: [
                     InkWell(
                       onTap: () {
-                        playAudio(widget.link);
                       },
                       child: Container(
                         width: size.width * 0.12,
@@ -526,9 +484,7 @@ class _MessageBubbleState extends State<MessageBubble> {
 
   playAudio(String url) async {
     if (icon == Icons.play_arrow) {
-      audioPlayer.play(url);
     } else {
-      audioPlayer.stop();
     }
     setState(() {
       icon = icon == Icons.play_arrow ? Icons.pause_outlined : Icons.play_arrow;

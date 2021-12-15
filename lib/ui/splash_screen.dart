@@ -38,7 +38,6 @@ class _SplashScreeState extends State<SplashScreen> {
               android: AndroidNotificationDetails(
                 channel.id,
                 channel.name,
-                channel.description,
                 color: Colors.blue,
                 playSound: true,
                 icon: '@mipmap/ic_launcher',
