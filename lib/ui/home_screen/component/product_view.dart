@@ -107,12 +107,13 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
                 height: size.height * 0.5,
                 margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
                 decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.6),
-                    image: DecorationImage(
-                      image: NetworkImage(widget.imageUrl),
-                    )),
+                  color: Colors.white.withOpacity(0.6),
+                  image: DecorationImage(
+                    image: NetworkImage(widget.imageUrl),
+                  ),
+                ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Container(

@@ -91,26 +91,32 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 width: size.width,
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 0.1),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _controllerEmail,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          prefixIcon: Icon(
-                            Icons.email,
-                            color: Colors.black,
-                          ),
-                          hintText: "Enter your email",
-                        ),
-                      ),
+
+                child: TextField(
+                  controller: _controllerEmail,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    prefixIcon: Icon(
+                      Icons.email,
+                      color: Colors.black,
+                    ),
+                 enabledBorder: OutlineInputBorder(
+                   borderRadius: BorderRadius.circular(10),
+                   borderSide: BorderSide(
+                     color: Colors.grey.shade400,
+                     width: 1
+                   )
+                 ),
+                    focusedBorder:  OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                        color: Colors.black,
+                        width: 1
                     )
-                  ],
+                ),
+                    labelText: 'Email',
+                    hintText: "Enter your email",
+                  ),
                 ),
               ),
               SizedBox(
@@ -119,38 +125,45 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 width: size.width,
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 0.1),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  children: [
-                    Expanded(
-                        child: TextField(
-                      obscureText: passwordIsVisible,
-                      controller: _controllerPassword,
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        prefixIcon: const Icon(
-                          Icons.vpn_key,
-                          color: Colors.black,
-                        ),
-                        hintText: "Enter your password",
-                        suffixIcon: IconButton(
-                            icon: Icon(
-                              passwordIsVisible
-                                  ? Icons.visibility_off
-                                  : Icons.remove_red_eye,
-                              color: Colors.black,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                passwordIsVisible = !passwordIsVisible;
-                              });
-                            }),
-                      ),
-                    ))
-                  ],
+
+                child: TextField(
+                  obscureText: passwordIsVisible,
+                  controller: _controllerPassword,
+                  decoration: InputDecoration(
+                border: InputBorder.none,
+                enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                        color: Colors.grey.shade400,
+                        width: 1
+                    )
+                ),
+                focusedBorder:  OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide(
+                        color: Colors.black,
+                        width: 1
+                    )
+                ),
+                prefixIcon: const Icon(
+                  Icons.vpn_key,
+                  color: Colors.black,
+                ),
+                labelText: 'Password',
+                hintText: "Enter your password",
+                suffixIcon: IconButton(
+                    icon: Icon(
+                      passwordIsVisible
+                          ? Icons.visibility_off
+                          : Icons.remove_red_eye,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        passwordIsVisible = !passwordIsVisible;
+                      });
+                    }),
+                  ),
                 ),
               ),
               SizedBox(

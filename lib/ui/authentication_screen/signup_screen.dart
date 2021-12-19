@@ -91,17 +91,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Container(
                 width: size.width,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 0.1),
-                    borderRadius: BorderRadius.circular(10)),
+
                 child: TextField(
                   controller: _controllerName,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
+
                     border: InputBorder.none,
                     prefixIcon: Icon(
                       Icons.person,
                       color: Colors.black,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color: Colors.grey.shade400,
+                            width: 1
+                        )
+                    ),
+                    labelText: "First name",
+                    focusedBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                            color: Colors.black,
+                            width: 1
+                        )
                     ),
                     hintText: "First name",
                   ),
@@ -113,13 +126,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Container(
                 width: size.width,
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 0.1),
-                    borderRadius: BorderRadius.circular(10)),
+
                 child: TextField(
                   controller: _controllerLName,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color: Colors.grey.shade400,
+                            width: 1
+                        )
+                    ),
+                    labelText: 'Last name',
+                    focusedBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1
+                        )
+                    ),
                     border: InputBorder.none,
                     prefixIcon: Icon(
                       Icons.person,
@@ -135,14 +160,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Container(
                 width: size.width,
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 0.1),
-                    borderRadius: BorderRadius.circular(10)),
+
                 child: TextField(
                   controller: _controllerEmail,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
                     border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color: Colors.grey.shade400,
+                            width: 1
+                        )
+                    ),
+                    labelText: 'Email',
+                    focusedBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1
+                        )
+                    ),
                     prefixIcon: Icon(
                       Icons.email,
                       color: Colors.black,
@@ -163,8 +200,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     borderRadius: BorderRadius.circular(10)),
                 child: TextField(
                   controller: _controllerAddress,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
                     border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color: Colors.grey.shade400,
+                            width: 1
+                        )
+                    ),
+                    labelText: 'Address',
+                    focusedBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color: Colors.black,
+                            width: 1
+                        )
+                    ),
                     prefixIcon: Icon(
                       Icons.home,
                       color: Colors.black,
@@ -185,11 +237,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     borderRadius: BorderRadius.circular(10)),
                 child: TextField(
                   controller: _controllerPhoneNum,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
                     border: InputBorder.none,
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.phone,
                       color: Colors.black,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color: Colors.grey.shade400,
+                            width: 1
+                        )
+                    ),
+                    labelText: 'Phone number',
+                    focusedBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                            color: Colors.black,
+                            width: 1
+                        )
                     ),
                     hintText: "Enter your phone number",
                   ),
@@ -201,17 +268,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Container(
                 width: size.width,
                 margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 0.1),
-                    borderRadius: BorderRadius.circular(10)),
                 child: TextField(
                   controller: _controllerPassword,
-                  decoration: const InputDecoration(
+                  decoration:  InputDecoration(
                     border: InputBorder.none,
                     prefixIcon: Icon(
                       Icons.vpn_key,
                       color: Colors.black,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide(
+                            color: Colors.grey.shade400,
+                            width: 1
+                        )
+                    ),
+                    labelText: "Password",
+                    focusedBorder:  OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: const BorderSide(
+                            color: Colors.black,
+                            width: 1
+                        )
                     ),
                     hintText: "Enter your password",
                   ),
