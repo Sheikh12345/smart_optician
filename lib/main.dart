@@ -47,7 +47,7 @@ Future<void> main() async {
 
     if (swAvailable && swInterceptAvailable) {
       AndroidServiceWorkerController serviceWorkerController =
-      AndroidServiceWorkerController.instance();
+          AndroidServiceWorkerController.instance();
 
       serviceWorkerController.serviceWorkerClient = AndroidServiceWorkerClient(
         shouldInterceptRequest: (request) async {
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Smart Optician',
         theme: ThemeData(
           // This is the theme of your application.
           //

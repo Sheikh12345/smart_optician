@@ -405,12 +405,32 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         });
       }).whenComplete(() {
         FirebaseFirestore.instance
-            .collection('users')
-            .doc(FirebaseAuth.instance.currentUser!.uid)
-            .collection('cart')
-            .doc(widget.productIdList[i])
-            .delete();
+            .collection('users').doc().delete();
       });
     }
+    FirebaseFirestore.instance
+        .collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('cart').doc().get().then((value){
+
+    });
+    removeProductsFromCart();
   }
+  final CollectionReference _fireLens =
+  FirebaseFirestore.instance
+      .collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('cart');
+  final List<String> _fireDocsLens = [];
+
+  removeProductsFromCart()async{
+    QuerySnapshot querySnapshotLens = await _fireLens.get();
+
+    for (int i = 0; i < querySnapshotLens.docs.length; i++) {
+      var a = querySnapshotLens.docs[i];
+      _fireDocsLens.add(a.id);
+    }
+
+    for(int i=0;i<_fireDocsLens.length;i++){
+      _fireLens.doc(_fireDocsLens.elementAt(i)).delete();
+    }
+  }
+
+
 }

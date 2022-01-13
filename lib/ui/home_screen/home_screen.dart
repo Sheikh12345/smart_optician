@@ -247,82 +247,88 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisSpacing: 10,
                             ),
                             itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  screenPush(
-                                      context,
-                                      ProductViewScreen(
-                                        docId: snapshot.data.docs[index].id,
-                                        category: snapshot.data.docs[index]
-                                            ['category'],
-                                        imageUrl: snapshot.data.docs[index]
-                                            ['image'],
-                                        price: snapshot.data.docs[index]
-                                            ['price'],
-                                        name: snapshot.data.docs[index]['name'],
-                                        gender: snapshot.data.docs[index]
-                                            ['gender'],
-                                        brandName: snapshot.data.docs[index]
-                                            ['brand'],
-                                        desc: snapshot.data.docs[index]['desc'],
-                                        ownerId: snapshot.data.docs[index]
-                                            ['ownerId'],
-                                        productId: snapshot.data.docs[index]
-                                            ['code'],
-                                      ));
-                                },
-                                child: Container(
-                                  width: size.width * 0.46,
-                                  margin:
-                                      const EdgeInsets.symmetric(horizontal: 5),
-                                  height: size.height * 0.1,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        width: size.width * 0.46,
-                                        height: size.height * 0.14,
-                                        margin: const EdgeInsets.symmetric(
-                                            horizontal: 10),
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                          image: NetworkImage(snapshot
-                                              .data.docs[index]['image']),
-                                        )),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.only(left: 5, bottom: 2),
-                                        child: Text(
-                                          snapshot.data.docs[index]['name'],
-                                          style: GoogleFonts.cabin(
-                                            color: Colors.grey.shade700,
-                                            fontSize: size.width * 0.05,
-                                            fontWeight: FontWeight.w600,
+                              if (snapshot.data.docs[index]['stock'] == 0) {
+                                return Container();
+                              } else {
+                                return InkWell(
+                                  onTap: () {
+                                    screenPush(
+                                        context,
+                                        ProductViewScreen(
+                                          docId: snapshot.data.docs[index].id,
+                                          category: snapshot.data.docs[index]
+                                              ['category'],
+                                          imageUrl: snapshot.data.docs[index]
+                                              ['image'],
+                                          price: snapshot.data.docs[index]
+                                              ['price'],
+                                          name: snapshot.data.docs[index]
+                                              ['name'],
+                                          gender: snapshot.data.docs[index]
+                                              ['gender'],
+                                          brandName: snapshot.data.docs[index]
+                                              ['brand'],
+                                          desc: snapshot.data.docs[index]
+                                              ['desc'],
+                                          ownerId: snapshot.data.docs[index]
+                                              ['ownerId'],
+                                          productId: snapshot.data.docs[index]
+                                              ['code'],
+                                        ));
+                                  },
+                                  child: Container(
+                                    width: size.width * 0.46,
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 5),
+                                    height: size.height * 0.1,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: size.width * 0.46,
+                                          height: size.height * 0.14,
+                                          margin: const EdgeInsets.symmetric(
+                                              horizontal: 10),
+                                          decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                            image: NetworkImage(snapshot
+                                                .data.docs[index]['image']),
+                                          )),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 5, bottom: 2),
+                                          child: Text(
+                                            snapshot.data.docs[index]['name'],
+                                            style: GoogleFonts.cabin(
+                                              color: Colors.grey.shade700,
+                                              fontSize: size.width * 0.05,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 5, bottom: 2),
-                                        child: Text(
-                                          snapshot.data.docs[index]['price'],
-                                          style: GoogleFonts.cabin(
-                                            color: Colors.black,
-                                            fontSize: size.width * 0.05,
-                                            fontWeight: FontWeight.w900,
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 5, bottom: 2),
+                                          child: Text(
+                                            snapshot.data.docs[index]['price'],
+                                            style: GoogleFonts.cabin(
+                                              color: Colors.black,
+                                              fontSize: size.width * 0.05,
+                                              fontWeight: FontWeight.w900,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
                             });
                       } else {
                         return const Center();
