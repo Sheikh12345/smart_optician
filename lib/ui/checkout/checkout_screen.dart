@@ -398,10 +398,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           'deliveryMethod': isCashOnDelivery ? 'cashOnDelivery' : 'Stripe',
           "productId": widget.productIdList,
           'price': price,
+          'category': widget.productCategory[i],
+          'categoryId': widget.productDocId[i],
           'customerId': FirebaseAuth.instance.currentUser!.uid,
           'ownerId': widget.productOwnerList[i],
-          'category': widget.productCategory[i],
-          'categoryId': widget.productDocId[i]
         });
       }).whenComplete(() {
         FirebaseFirestore.instance
