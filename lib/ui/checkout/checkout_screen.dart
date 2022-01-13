@@ -14,11 +14,15 @@ class CheckOutScreen extends StatefulWidget {
   final List<String> productListPrice;
   final List<String> productOwnerList;
   final List<String> productIdList;
+  final List<String> productDocId;
+  final List<String> productCategory;
 
   const CheckOutScreen(
       {Key? key,
       required this.productList,
       required this.productListPrice,
+      required this.productDocId,
+      required this.productCategory,
       required this.productOwnerList,
       required this.productIdList})
       : super(key: key);
@@ -118,8 +122,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                     borderRadius: BorderRadius.circular(10)),
                 child: TextField(
                   controller: _controllerAddress,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                       border: InputBorder.none,
+                      labelText: 'Address',
                       hintText: "your delivery address"),
                 ),
               ),
@@ -127,7 +132,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 height: size.height * 0.01,
               ),
               Container(
-                padding: EdgeInsets.only(left: 10),
+                padding: const EdgeInsets.only(left: 10),
                 margin: EdgeInsets.symmetric(horizontal: size.width * 0.04),
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -135,8 +140,10 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                 child: TextField(
                   controller: _controllerPhoneNum,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      border: InputBorder.none, hintText: "Phone number"),
+                  decoration: const InputDecoration(
+                      labelText: "Phone number",
+                      border: InputBorder.none,
+                      hintText: "Phone number"),
                 ),
               ),
               Container(
@@ -375,7 +382,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
         "productId": widget.productIdList,
         'price': price,
         'customerId': FirebaseAuth.instance.currentUser!.uid,
-        'ownerId': widget.productOwnerList[i]
+        'ownerId': widget.productOwnerList[i],
+        'category': widget.productCategory[i],
+        'categoryId': widget.productDocId[i]
       }).whenComplete(() async {
         await FirebaseFirestore.instance
             .collection('users')
@@ -390,7 +399,9 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
           "productId": widget.productIdList,
           'price': price,
           'customerId': FirebaseAuth.instance.currentUser!.uid,
-          'ownerId': widget.productOwnerList[i]
+          'ownerId': widget.productOwnerList[i],
+          'category': widget.productCategory[i],
+          'categoryId': widget.productDocId[i]
         });
       }).whenComplete(() {
         FirebaseFirestore.instance

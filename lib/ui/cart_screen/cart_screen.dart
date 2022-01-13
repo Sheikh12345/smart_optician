@@ -19,6 +19,8 @@ class _CartScreenState extends State<CartScreen> {
   List<String> productListPrice = [];
   List<String> productOwnerList = [];
   List<String> productIdList = [];
+  List<String> productDocId = [];
+  List<String> productCategory = [];
 
   int price = 0;
 
@@ -42,13 +44,14 @@ class _CartScreenState extends State<CartScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.black,
-                        )),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.black,
+                      ),
+                    ),
                     Text(
                       "My Cart",
                       style: GoogleFonts.cabin(
@@ -100,6 +103,14 @@ class _CartScreenState extends State<CartScreen> {
                                                   productIdList.add(snapshot
                                                       .data
                                                       .docs[index]['code']);
+
+                                                  productDocId.add(
+                                                      snapshot.data.docs[index]
+                                                          ['categoryId']);
+                                                  productCategory.add(snapshot
+                                                      .data
+                                                      .docs[index]['category']);
+
                                                   productListPrice.add(snapshot
                                                       .data
                                                       .docs[index]['price']);
@@ -116,6 +127,13 @@ class _CartScreenState extends State<CartScreen> {
                                                   productOwnerList.remove(
                                                       snapshot.data.docs[index]
                                                           ['ownerId']);
+
+                                                  productDocId.remove(
+                                                      snapshot.data.docs[index]
+                                                          ['categoryId']);
+                                                  productCategory.remove(
+                                                      snapshot.data.docs[index]
+                                                          ['category']);
                                                 }
                                               });
                                               price = 0;
@@ -300,6 +318,8 @@ class _CartScreenState extends State<CartScreen> {
                     productList: productList,
                     productListPrice: productListPrice,
                     productOwnerList: productOwnerList,
+                    productCategory: productCategory,
+                    productDocId: productDocId,
                   ),
                 );
               },

@@ -232,6 +232,8 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
               'quantity': 1,
               'name': widget.name,
               'price': widget.price,
+              'category': widget.category,
+              'categoryId': widget.docId
             }).whenComplete(() {
               showSnackBarSuccess(context, 'Added to cart');
               Navigator.pop(context);
@@ -275,6 +277,8 @@ class _ProductViewScreenState extends State<ProductViewScreen> {
       'ownerId': widget.ownerId,
       'code': widget.productId,
       'name': widget.name,
+      'category': widget.category,
+      'categoryId': widget.docId
     }).whenComplete(() {
       showSnackBarSuccess(context, 'Product added to wishlist');
       setState(() {
